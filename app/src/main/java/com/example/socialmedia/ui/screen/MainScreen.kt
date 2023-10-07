@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.socialmedia.R
+import com.example.socialmedia.ui.components.BottomNavigationView
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -31,7 +32,7 @@ fun MainScreen() {
         },
         bottomBar = {
 
-//            BottomNavigationView(navController)
+            BottomNavigationView(navController)
 
             BottomAppBar(
                 cutoutShape = MaterialTheme.shapes.small.copy(
