@@ -1,9 +1,14 @@
 package com.example.socialmedia.ui.components
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import com.example.socialmedia.ui.theme.AppGray
+import com.example.socialmedia.ui.theme.DarkColor
+import com.example.socialmedia.ui.theme.RedColor
 import com.example.socialmedia.utils.NavigationItem
 
 @Composable
@@ -19,7 +24,10 @@ fun BottomNavigationView(navController: NavController) {
         NavigationItem.Profile,
     )
 
-    BottomAppBar {
+    BottomAppBar(
+        backgroundColor = if (isSystemInDarkTheme()) DarkColor else Color.White,
+         contentColor = RedColor
+    ) {
         items.forEach {
             BottomNavigationItem(
                 icon = {
@@ -29,6 +37,8 @@ fun BottomNavigationView(navController: NavController) {
                     )
                 },
                 selected = selectedRoute == it.route,
+                selectedContentColor = RedColor,
+                unselectedContentColor = AppGray,
                 onClick = {
                     navController.navigate(it.route) {
                         navController.graph.startDestDisplayName.let { route ->
