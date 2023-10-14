@@ -30,19 +30,17 @@ fun MainScreen() {
     Scaffold(
         topBar = {
             TopAppBar {
-//                Text(text = stringResource(id = R.string.app_name))
                 TopAppView()
             }
         },
         bottomBar = {
-
-            BottomNavigationView(navController)
-
             BottomAppBar(
                 cutoutShape = MaterialTheme.shapes.small.copy(
                     CornerSize(percent = 50)
                 )
-            ) {}
+            ) {
+                BottomNavigationView(navController)
+            }
         }
     ) {
         NavHost(
