@@ -2,6 +2,7 @@ package com.example.socialmedia.data
 
 import com.example.socialmedia.models.Story
 
+
 object MockData {
 
     val stories = ArrayList<Story>()
