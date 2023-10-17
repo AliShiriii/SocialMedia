@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.socialmedia.data.MockData
+import com.example.socialmedia.ui.components.PostsView
 import com.example.socialmedia.ui.components.StoriesView
 
 @Composable
@@ -19,6 +20,6 @@ fun HomeScreen() {
       Spacer(modifier = Modifier.height(7.dp))
       Divider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.padding(15.dp))
       Spacer(modifier = Modifier.height(7.dp))
-//    PostsView()
+    PostsView(MockData.posts)
   }
 }
