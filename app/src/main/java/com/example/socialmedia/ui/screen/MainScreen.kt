@@ -1,22 +1,15 @@
 package com.example.socialmedia.ui.screen
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.socialmedia.R
+import androidx.navigation.navArgument
 import com.example.socialmedia.ui.components.BottomNavigationView
 import com.example.socialmedia.ui.components.TopAppView
 
@@ -26,21 +19,17 @@ import com.example.socialmedia.ui.components.TopAppView
 fun MainScreen() {
 
     val navController = rememberNavController()
-
+    var fullScreen by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TopAppBar {
-                TopAppView()
+                if (!fullScreen)
+                    TopAppView()
             }
         },
         bottomBar = {
-            BottomAppBar(
-                cutoutShape = MaterialTheme.shapes.small.copy(
-                    CornerSize(percent = 50)
-                )
-            ) {
+            if (!fullScreen)
                 BottomNavigationView(navController)
-            }
         }
     ) {
         NavHost(
@@ -48,19 +37,30 @@ fun MainScreen() {
             startDestination = "Home"
         ) {
             composable("Home") {
-                HomeScreen()
+                fullScreen = false
+                HomeScreen(navController = navController)
             }
             composable("Search") {
+                fullScreen = false
                 SearchScreen()
             }
             composable("Add") {
+                fullScreen = false
                 AddScreen()
             }
             composable("Activities") {
+                fullScreen = false
                 ActivitiesScreen()
             }
             composable("Profile") {
+                fullScreen = false
                 ProfileScreen()
+            }
+            composable("ShowStory/{index}", arguments = listOf(navArgument("index") {
+                type = NavType.IntType
+            })) { backStack ->
+                fullScreen = true
+                showStoryScreen(backStack.arguments?.get("index") as Int)
             }
         }
     }

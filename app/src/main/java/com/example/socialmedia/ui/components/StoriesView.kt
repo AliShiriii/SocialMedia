@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.socialmedia.models.Story
 import com.example.socialmedia.ui.theme.RedColor
 import com.example.socialmedia.ui.theme.ShadowColor
@@ -26,7 +27,7 @@ import com.example.socialmedia.ui.theme.VioletColor
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun StoriesView(stories: ArrayList<Story>) {
+fun StoriesView(stories: ArrayList<Story>, navController: NavController) {
 
     LazyRow {
         items(stories.size + 1) { index ->
@@ -36,11 +37,12 @@ fun StoriesView(stories: ArrayList<Story>) {
                     story = Story(
                         "", "https://www.instagram.com/reel/CyWTDZmKLky/?igshid=MzRlODBiNWFlZA==",
                         false
-                    ),
+                    ), navController = navController,
+                    index = 0,
                     true
                 )
             } else {
-                StoryItem(stories[index - 1])
+                StoryItem(stories[index - 1], navController = navController, index - 1)
             }
         }
     }
@@ -48,7 +50,7 @@ fun StoriesView(stories: ArrayList<Story>) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun StoryItem(story: Story, isMyself: Boolean = false) {
+fun StoryItem(story: Story, navController: NavController, index: Int, isMyself: Boolean = false) {
     val context = LocalContext.current
 
     Card(
@@ -61,7 +63,8 @@ fun StoryItem(story: Story, isMyself: Boolean = false) {
         ) else null,
         onClick = {
             if (!isMyself) {
-                Toast.makeText(context, "Cliched onn story.", Toast.LENGTH_SHORT).show()
+
+                navController.navigate("showStory/$index")
             } else {
                 //TODO: go to story compose
             }
